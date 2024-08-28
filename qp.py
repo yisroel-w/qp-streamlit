@@ -7,7 +7,6 @@ CLIENT_ID = st.secrets["client_id"]
 API_ENDPOINT = "https://askrobot.azurewebsites.net"
 
 
-# Streamlit app
 def main():
     st.title("Chat Interface")
 
@@ -22,9 +21,14 @@ def main():
         if option == "Answer":
             # Call the Answer API
             response = call_answer_api(prompt)
-            print(response)
-            st.write("Answer:")
-            st.write(response)
+            st.markdown(
+                    f"<div style='text-align: right; direction: rtl;'><h4>Answer</h4></div>",
+                    unsafe_allow_html=True,
+                )
+            st.markdown(
+                    f"<div style='text-align: right; direction: rtl;'>{response}</h4></div>",
+                    unsafe_allow_html=True,
+                )
 
         elif option == "Search":
             # Call the Search API
@@ -64,7 +68,7 @@ def call_answer_api(prompt):
         },
     )
     response_json = json.loads(response.text)
-
+    print(response_json)
     return response_json["data"]["answer"]
 
 
