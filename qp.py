@@ -44,10 +44,10 @@ def main():
 
             for source in response:
                 index = index + 1
-                st.markdown(
-                    f"<div style='text-align: right; direction: rtl;'><h4>Source {index} {source['title']}</h4></div>",
-                    unsafe_allow_html=True,
-                )
+                #st.markdown(
+                #    f"<div style='text-align: right; direction: rtl;'><h4>Source {index} {source['title']}</h4></div>",
+                #    unsafe_allow_html=True,
+                #)
                 st.markdown(
                     f"<div style='text-align: right; direction: rtl;'>{source['text'].replace("\n", "<br>")}</h4></div>",
                     unsafe_allow_html=True,
