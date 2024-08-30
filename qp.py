@@ -10,9 +10,9 @@ API_ENDPOINT = "https://askrobot.azurewebsites.net"
 def main():
     st.title("Torah Search")
     st.markdown("""Demo of vector search within the Torah domain. The database currently includes the majority of the Rebbe's correspondence, in Hebrew and Yiddish.
-<br><r>WhatsApp the bot at [+1 877 693-1021](https://wa.me/+18776931021)
-<br>Contact the team at [info@trisso.com](mailto:info@trisso.com)
-<br>[aitorah.org](https://aitorah.org/)""")
+<br/><br/>WhatsApp the bot at [+1 877 693-1021](https://wa.me/+18776931021)
+<br/>Contact the team at [info@trisso.com](mailto:info@trisso.com)
+<br/>[aitorah.org](https://aitorah.org/)""")
     # Text input for prompt
     prompt = st.text_input("Enter your prompt")
 
