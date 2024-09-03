@@ -69,10 +69,13 @@ def main():
             # Call the Search API
             response = call_search_api(prompt)
             print(response)
-            st.header("Search Results:")
 
             index = 0
 
+            st.markdown(
+                    f"<div style='text-align:right; direction:rtl'><h4>Search Result</h4></div>",
+                    unsafe_allow_html=True,
+                )
             for source in response:
                 index = index + 1
                 st.markdown(
@@ -126,6 +129,10 @@ def call_search_api(prompt):
     response_json = json.loads(response.text)
 
     return response_json["data"]
+
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":
