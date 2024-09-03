@@ -7,6 +7,13 @@ CLIENT_ID = st.secrets["client_id"]
 API_ENDPOINT = "https://askrobot.azurewebsites.net"
 
 
+def is_hebrew(char):
+    return '\u0590' <= char <= '\u05FF'
+
+def is_english(char):
+    return 'A' <= char <= 'Z' or 'a' <= char <= 'z'
+
+# Streamlit app
 def main():
     st.title("Torah Search")
     st.markdown("""Demo of vector search within the Torah domain. The database currently includes the majority of the Rebbe's correspondence, in Hebrew and Yiddish.\\
@@ -25,14 +32,38 @@ def main():
         if option == "Answer":
             # Call the Answer API
             response = call_answer_api(prompt)
+            hebrew = is_hebrew(response[0])
             st.markdown(
-                    f"<div style='text-align: right; direction: rtl;'><h4>Answer</h4></div>",
+                    f"<div style='text-align: {"right" if hebrew else "left"}; direction: {"rtl" if hebrew else "ltr"}'><h4>Answer</h4></div>",
                     unsafe_allow_html=True,
                 )
             st.markdown(
-                    f"<div style='text-align: right; direction: rtl;'>{response}</h4></div>",
+                    f"<div style='text-align: {"right" if hebrew else "left"}; direction: {"rtl" if hebrew else "ltr"}'>{response}</h4></div>",
                     unsafe_allow_html=True,
                 )
+            st.divider()
+            response = call_search_api(prompt)
+            print(response)
+
+            st.markdown(
+                    f"<div style='text-align: right; direction: rtl;'><h4>Sources</h4></div>",
+                    unsafe_allow_html=True,
+                )
+            
+            index = 0
+
+            for source in response:
+                index = index + 1
+                st.markdown(
+                    f"<div style='text-align: right; direction: rtl;'><h4>{source['title']}</h4></div>",
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    f"<div style='text-align: right; direction: rtl;'>{source['text'].replace("\n", "<br>")}</h4></div>",
+                    unsafe_allow_html=True,
+                )
+
+            
 
         elif option == "Search":
             # Call the Search API
@@ -45,7 +76,7 @@ def main():
             for source in response:
                 index = index + 1
                 st.markdown(
-                    f"<div style='text-align: right; direction: rtl;'><h4>Source {index}</h4></div>",
+                    f"<div style='text-align: right; direction: rtl;'><h4>{source['title']}</h4></div>",
                     unsafe_allow_html=True,
                 )
                 st.markdown(
